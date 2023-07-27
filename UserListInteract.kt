@@ -66,17 +66,17 @@ class UserListInteract (val userList:MutableList<PerfilUsuario>){
                 println("| | | |USUARIO ENCONTRADO| | | |")
                 for (user in searchFind) {
                     println("ID: ${user.iD}")
-                    println("Nomre: ${user.name}")
+                    println("Nombre: ${user.name}")
                     println("Apellido: ${user.lastName}")
                     println("Foto (URL): ${user.urlPhoto}")
                     println("Edad: ${user.age}")
-                    println("Email: ${user.eMail}")
-                    println("Biografía: ${user.bio?:"Vaya! Este usuario no tiene una biografía"}")
-                    println("|Hobbies|")
+                    println("E-mail: ${user.eMail}")
+                    println("Biografía: ${user.bio?:"*Vaya! Este usuario no tiene una biografía*"}")
+                    println("||Hobbies||")
                     for (hobby in user.hobbies){
                         println("   Hobby: ${hobby.hobby}")
                         println("   Descripción: ${hobby.description}")
-                        println("   Foto: ${hobby.urlPhoto?: "Foto no disponible"}")
+                        println("   Foto: ${hobby.urlPhoto?: "*Foto no disponible*"}")
                     }
                     println("")
                 }
@@ -118,14 +118,13 @@ class UserListInteract (val userList:MutableList<PerfilUsuario>){
                 println("No se encontró el usuario, vuelve a intentarlo")
             }
             println("~ ~ ~ ~AÑADIR HOBBY~ ~ ~ ~")
-            println("Ingrese los siguientes datos")
             println("Hobby:")
             val newHobby = readLine()?: return
 
             println("Ingrese la descripción del hobby:")
             val newDescription = readLine()?: return
 
-            println("Ingrese el URL para una foto de su hobby (opciona):")
+            println("Ingrese el URL para una foto de su hobby (opcional):")
             val newPhotoHobby = readLine()
 
             val newUserHobby = Hobby(
