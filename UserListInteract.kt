@@ -45,7 +45,7 @@ class UserListInteract (val userList:MutableList<PerfilUsuario>){
                 newState
             )
             userList.add(newUser)
-
+            println("Nuevo perfil creado")
         }
         catch (e: IllegalArgumentException){
             println("ERROR al crear perfil, por favor intente de nuevo.")
@@ -57,9 +57,7 @@ class UserListInteract (val userList:MutableList<PerfilUsuario>){
         val searchName = readLine()?: return
         try{
             val searchFind = userList.filter {
-                user ->
-                user.name.equals(searchName, ignoreCase = true) ||
-                user.lastName.equals(searchName, ignoreCase = true)
+                user -> user.name.equals(searchName)
             }
             if (searchFind.isEmpty()){
                 println("No se encontró el usuario que buscas, vuelve a intentarlo")
@@ -74,9 +72,9 @@ class UserListInteract (val userList:MutableList<PerfilUsuario>){
                     println("Edad: ${user.age}")
                     println("Email: ${user.eMail}")
                     println("Biografía: ${user.bio?:"Vaya! Este usuario no tiene una biografía"}")
-                    println("Hobbies:")
+                    println("|Hobbies|")
                     for (hobby in user.hobbies){
-                        println("Hobby: ${hobby.hobby}")
+                        println("   Hobby: ${hobby.hobby}")
                         println("   Descripción: ${hobby.description}")
                         println("   Foto: ${hobby.urlPhoto?: "Foto no disponible"}")
                     }
@@ -111,31 +109,37 @@ class UserListInteract (val userList:MutableList<PerfilUsuario>){
         println("Ingrese el nombre de usuario al que desea añadir un hobby:")
         val searchName = readLine()?: return
         try{
-            val searchFindHobby = userList.filter {
+            val searchFindHobby = userList.find {
                     user -> user.iD.toString() == searchName||
                     user.name.equals(searchName, ignoreCase = true) ||
                     user.lastName.equals(searchName, ignoreCase = true)
             }
-            if (searchFindHobby.isEmpty()){
-                println("No se encontró el usuario que buscas, vuelve a intentarlo")
+            if (searchFindHobby == null){
+                println("No se encontró el usuario, vuelve a intentarlo")
             }
+            println("~ ~ ~ ~AÑADIR HOBBY~ ~ ~ ~")
+            println("Ingrese los siguientes datos")
+            println("Hobby:")
+            val newHobby = readLine()?: return
+
+            println("Ingrese la descripción del hobby:")
+            val newDescription = readLine()?: return
+
+            println("Ingrese el URL para una foto de su hobby (opciona):")
+            val newPhotoHobby = readLine()
+
+            val newUserHobby = Hobby(
+                newHobby,
+                newDescription,
+                newPhotoHobby
+            )
+            if (searchFindHobby != null) {
+                searchFindHobby.hobbies.add(newUserHobby)
+            }
+            println("Hobby agregado!")
         }
         catch(e: Exception){
             println("ERROR al buscar usuario, por favor vuelva a intentar")
         }
-        println("~ ~ ~ ~AÑADIR HOBBY~ ~ ~ ~")
-        println("Ingrese los siguientes datos:")
-
-        println("Hobby:")
-        val newHobbies = readLine()?: return
-
-        println("Ingrese la descripción del hobby:")
-        val newDescription = readLine()?: return
-
-        println("Ingrese el URL para una foto de su hobby (opciona):")
-        val newPhotoHobby = readLine()
-
-        val newHobby = Hobby(newHobbies,newDescription,newPhotoHobby)
-        println("Hobby agregado!")
     }
 }
